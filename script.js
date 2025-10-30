@@ -217,7 +217,7 @@ function updateCart() {
         <div class="flex justify-between items-center">
             <div>
                 <p class="font-semibold">${item.title}</p>
-                <p>Price: $${item.price} x ${item.qty}</p>
+                <p>Price: ${item.price} x ${item.qty} BDT</p>
             </div>
             <button class="remove-item text-red-500" data-id="${item.id}">&times;</button>
         </div>
