@@ -1,0 +1,358 @@
+// Navbar scroll blur effect____________________
+window.addEventListener("scroll", () => {
+    const navbar = document.querySelector(".navbar");
+
+});
+
+// Get all navbar links
+const navLinks = document.querySelectorAll(".nav-link");
+const sections = document.querySelectorAll("section");
+
+// Function to update active menu
+function updateActiveMenu() {
+    let currentSection = "";
+
+    sections.forEach((section) => {
+        const sectionTop = section.offsetTop - 150; // adjust 150px for fixed navbar
+        const sectionHeight = section.offsetHeight;
+        if (window.scrollY >= sectionTop && window.scrollY < sectionTop + sectionHeight) {
+            currentSection = section.getAttribute("id");
+        }
+    });
+
+    navLinks.forEach((link) => {
+        link.classList.remove("font-bold", "text-secondary"); // remove previous highlight
+        if (link.getAttribute("href") === `#${currentSection}`) {
+            link.classList.add("font-bold", "text-secondary"); // highlight active link
+        }
+    });
+}
+
+// Listen to scroll event
+window.addEventListener("scroll", updateActiveMenu);
+
+// Run initially in case page is not at top
+updateActiveMenu();
+
+
+// Shopping Cart Drawer__________________________
+const cartBtn = document.getElementById("cartBtn");
+const cartDrawer = document.getElementById("cartDrawer");
+const cartOverlay = document.getElementById("cartOverlay");
+const closeCartBtn = document.getElementById("closeCartBtn");
+
+function openCart() {
+    cartDrawer.classList.remove("translate-x-full");
+    cartOverlay.classList.remove("hidden");
+}
+
+function closeCart() {
+    cartDrawer.classList.add("translate-x-full");
+    cartOverlay.classList.add("hidden");
+}
+
+cartBtn.addEventListener("click", openCart);
+closeCartBtn.addEventListener("click", closeCart);
+cartOverlay.addEventListener("click", closeCart);
+
+
+
+// Hero Slider__________________________
+const slides = document.querySelectorAll("#slider .slide");
+let currentSlide = 0;
+let slideInterval = setInterval(nextSlide, 3000);
+
+function showSlide(index) {
+    slides.forEach((slide, i) => {
+        slide.style.opacity = i === index ? "1" : "0";
+    });
+    currentSlide = index;
+}
+
+function nextSlide() {
+    let nextIndex = currentSlide + 1 >= slides.length ? 0 : currentSlide + 1;
+    showSlide(nextIndex);
+}
+
+function prevSlideFunc() {
+    let prevIndex = currentSlide - 1 < 0 ? slides.length - 1 : currentSlide - 1;
+    showSlide(prevIndex);
+}
+
+// Manual Controls
+document.getElementById("nextSlide").addEventListener("click", () => {
+    nextSlide();
+    resetInterval();
+});
+document.getElementById("prevSlide").addEventListener("click", () => {
+    prevSlideFunc();
+    resetInterval();
+});
+
+function resetInterval() {
+    clearInterval(slideInterval);
+    slideInterval = setInterval(nextSlide, 3000);
+}
+
+// Initialize first slide
+showSlide(currentSlide);
+
+
+
+
+const productList = document.getElementById("productList");
+const sortSelect = document.getElementById("sortPrice");
+const showMoreBtn = document.getElementById("showMoreBtn");
+
+let products = [];
+let currentProducts = []; // always holds the sorted or unsorted list
+let showingAll = false;
+
+// Fetch products
+async function fetchProducts() {
+    try {
+        const res = await fetch("https://fakestoreapi.com/products");
+        products = await res.json();
+        currentProducts = [...products]; // initialize
+        displayProducts(currentProducts.slice(0, 6)); // show first 6
+    } catch (err) {
+        console.error("Failed to fetch products:", err);
+        productList.innerHTML = "<p class='col-span-3 text-center text-red-500'>Failed to load products.</p>";
+    }
+}
+
+// Display products
+function displayProducts(list) {
+    productList.innerHTML = list
+        .map(
+            (product) => `
+        <div class="bg-white p-6 rounded-xl shadow hover:shadow-lg transition text-center">
+          <img src="${product.image}" alt="${product.title}" class="h-40 w-full object-contain mb-4"/>
+          <h3 class="font-semibold text-lg mb-2">${product.title}</h3>
+          <p class="text-secondary font-bold mb-2">${product.price} BDT</p>
+          <button 
+            class="add-to-cart bg-gradient-to-r from-secondary to-orange-500 text-white px-4 py-2 rounded-md font-semibold hover:opacity-90"
+            data-id="${product.id}"
+            data-title="${product.title}"
+            data-price="${product.price}"
+            >
+            Add to Cart
+            </button>
+        </div>
+      `
+        )
+        .join("");
+}
+
+// Sorting
+sortSelect.addEventListener("change", (e) => {
+    const value = e.target.value;
+    currentProducts = [...products]; // start fresh
+
+    if (value === "lowToHigh") {
+        currentProducts.sort((a, b) => a.price - b.price);
+    } else if (value === "highToLow") {
+        currentProducts.sort((a, b) => b.price - a.price);
+    }
+
+    displayProducts(showingAll ? currentProducts : currentProducts.slice(0, 6));
+});
+
+// Show More / Show Less toggle
+showMoreBtn.addEventListener("click", () => {
+    showingAll = !showingAll;
+    if (showingAll) {
+        displayProducts(currentProducts);
+        showMoreBtn.textContent = "Show Less";
+    } else {
+        displayProducts(currentProducts.slice(0, 6));
+        showMoreBtn.textContent = "Show More";
+    }
+});
+
+// Initialize
+fetchProducts();
+
+
+// Cart functionality
+const cartItemsContainer = document.getElementById("cartItems");
+const subtotalEl = document.getElementById("subtotal");
+const deliveryEl = document.getElementById("delivery");
+const shippingEl = document.getElementById("shipping");
+const discountEl = document.getElementById("discount");
+const totalEl = document.getElementById("total");
+const couponInput = document.getElementById("couponInput");
+const applyCouponBtn = document.getElementById("applyCouponBtn");
+
+let cart = [];
+let discountPercent = 0;
+
+document.addEventListener("click", (e) => {
+    if (e.target.classList.contains("add-to-cart")) {
+        const id = e.target.dataset.id;
+        const title = e.target.dataset.title;
+        const price = parseFloat(e.target.dataset.price);
+
+        const existingItem = cart.find(item => item.id === id);
+        if (existingItem) {
+            existingItem.qty += 1;
+        } else {
+            cart.push({ id, title, price, qty: 1 });
+        }
+
+        updateCart();
+        openCart(); // open drawer on add
+    }
+
+    if (e.target.classList.contains("remove-item")) {
+        const id = e.target.dataset.id;
+        cart = cart.filter(item => item.id !== id);
+        updateCart();
+    }
+});
+
+applyCouponBtn.addEventListener("click", () => {
+    const code = couponInput.value.trim().toUpperCase();
+    discountPercent = code === "SMART10" ? 10 : 0;
+    updateCart();
+});
+
+function updateCart() {
+    cartItemsContainer.innerHTML = cart.map(item => `
+        <div class="flex justify-between items-center">
+            <div>
+                <p class="font-semibold">${item.title}</p>
+                <p>Price: $${item.price} x ${item.qty}</p>
+            </div>
+            <button class="remove-item text-red-500" data-id="${item.id}">&times;</button>
+        </div>
+    `).join("");
+
+    const subtotal = cart.reduce((acc, item) => acc + item.price * item.qty, 0);
+    const delivery = subtotal > 0 ? 10 : 0;
+    const shipping = subtotal > 0 ? 5 : 0;
+    const discount = subtotal * (discountPercent / 100);
+    const total = subtotal + delivery + shipping - discount;
+
+    subtotalEl.textContent = subtotal.toFixed(2);
+    deliveryEl.textContent = delivery.toFixed(2);
+    shippingEl.textContent = shipping.toFixed(2);
+    discountEl.textContent = discount.toFixed(2);
+    totalEl.textContent = total.toFixed(2);
+}
+
+
+
+
+// User Balance System -----------------
+let balance = localStorage.getItem("userBalance") ? parseFloat(localStorage.getItem("userBalance")) : 1000;
+const balanceEl = document.getElementById("userBalance"); // make sure you have a <span id="userBalance"></span> in the drawer
+const addMoneyBtn = document.getElementById("addMoneyBtn"); // <button id="addMoneyBtn">Add 1000</button>
+const balanceWarning = document.getElementById("balanceWarning"); // optional <p>Not enough balance</p>
+
+function updateBalanceDisplay() {
+    balanceEl.textContent = balance.toFixed(2);
+}
+
+updateBalanceDisplay();
+
+// Handle "Add Money"
+addMoneyBtn.addEventListener("click", () => {
+    balance += 1000;
+    localStorage.setItem("userBalance", balance);
+    updateBalanceDisplay();
+    balanceWarning.classList.add("hidden");
+});
+
+// Handle "Reset Balance"
+const resetBalanceBtn = document.getElementById("resetBalanceBtn");
+resetBalanceBtn.addEventListener("click", () => {
+    balance = 1000;
+    localStorage.setItem("userBalance", balance);
+    updateBalanceDisplay();
+    balanceWarning.classList.add("hidden");
+});
+
+// Modify Cart Functionality -----------------
+document.addEventListener("click", (e) => {
+    if (e.target.classList.contains("add-to-cart")) {
+        const id = e.target.dataset.id;
+        const title = e.target.dataset.title;
+        const price = parseFloat(e.target.dataset.price);
+
+        // Calculate potential new subtotal if this product is added
+        let potentialSubtotal = cart.reduce((acc, item) => acc + item.price * item.qty, 0);
+        const existingItem = cart.find(item => item.id === id);
+        if (existingItem) {
+            potentialSubtotal += price; // adding 1 more qty
+        } else {
+            potentialSubtotal += price; // adding new item
+        }
+
+        // Check against user balance
+        if (potentialSubtotal > balance) {
+            // Cannot add product
+            document.getElementById("balanceWarning").classList.remove("hidden");
+            return;
+        } else {
+            document.getElementById("balanceWarning").classList.add("hidden");
+        }
+
+        // Add product to cart
+        if (existingItem) {
+            existingItem.qty += 1;
+        } else {
+            cart.push({ id, title, price, qty: 1 });
+        }
+
+        updateCart();
+        openCart();
+    }
+});
+
+
+// Update Cart Function to Deduct From Balance -----------------
+function updateCart() {
+    cartItemsContainer.innerHTML = cart.map(item => `
+        <div class="flex justify-between items-center">
+            <div>
+                <p class="font-semibold">${item.title}</p>
+                <p>Price: $${item.price} x ${item.qty}</p>
+            </div>
+            <button class="remove-item text-red-500" data-id="${item.id}">&times;</button>
+        </div>
+    `).join("");
+
+    const subtotal = cart.reduce((acc, item) => acc + item.price * item.qty, 0);
+    const delivery = subtotal > 0 ? 10 : 0;
+    const shipping = subtotal > 0 ? 5 : 0;
+    const discount = subtotal * (discountPercent / 100);
+    const total = subtotal + delivery + shipping - discount;
+
+    subtotalEl.textContent = subtotal.toFixed(2);
+    deliveryEl.textContent = delivery.toFixed(2);
+    shippingEl.textContent = shipping.toFixed(2);
+    discountEl.textContent = discount.toFixed(2);
+    totalEl.textContent = total.toFixed(2);
+
+    // Deduct from balance dynamically
+    balanceEl.textContent = (balance - subtotal).toFixed(2);
+}
+
+// checkout button functionality
+const checkoutBtn = document.getElementById("checkoutBtn");
+checkoutBtn.addEventListener("click", () => {
+    if (cart.length > 0) {
+        alert("Checkout successful! Your order has been placed.");
+        cart = [];
+        updateCart();
+    } else {
+        alert("Your cart is empty. Please add items to your cart before checking out.");
+    }
+});
+
+// Contact form
+document.getElementById("contactForm").addEventListener("submit", (e) => {
+    e.preventDefault();
+    alert("Message sent successfully! We’ll get back to you soon.");
+});

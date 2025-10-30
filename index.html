@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Rentify | Find Your Ride</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- DaisyUI CDN (must come AFTER Tailwind) -->
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@4.12.10/dist/full.min.css" rel="stylesheet" type="text/css" />
+
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#1A1A40",
+                        secondary: "#FF6F3C",
+                    },
+                },
+            },
+        };
+    </script>
+    <!-- Font Awesome CDN -->
+    <script src="https://kit.fontawesome.com/e21f3df6f5.js" crossorigin="anonymous"></script>
+
+
+    <style>
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 80px;
+            overflow-x: hidden;
+        }
+    </style>
+
+</head>
+
+<body class="font-sans text-primary ">
+    <!-- Navbar -->
+    <header id="navbar"
+        class="fixed top-0 left-0 w-full z-50 transition-all duration-300 bg-transparent backdrop-blur-md mb-5">
+        <div class="flex items-center justify-between px-4 py-4 max-w-7xl mx-auto">
+            <div class="flex items-center space-x-2 text-2xl font-semibold">
+                <span class="text-black hover:text-secondary">SmartShop</span>
+            </div>
+            <nav class="hidden text-black md:flex space-x-6 font-medium">
+                <a href="#home" class="nav-link">Home</a>
+                <a href="#aboutShop" class="nav-link">About Shop</a>
+                <a href="#products" class="nav-link">Products</a>
+                <a href="#reviews" class="nav-link">Reviews</a>
+                <a href="#about" class="nav-link">About Us</a>
+                <a href="#contact" class="nav-link">Contact</a>
+                <a href="#faq" class="nav-link">FAQ</a>
+            </nav>
+            <div class="flex items-center space-x-3">
+                <button id="cartBtn">
+                    <i class="fa-solid fa-cart-shopping text-lg text-secondary"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section with Slider -->
+    <section id="home" class="h-screen relative mt-20 overflow-hidden">
+        <!-- Slides -->
+        <div id="slider" class="h-full relative">
+            <div class="slide absolute inset-0 transition-opacity duration-1000 opacity-100">
+                <img src="./image/bg-3.jpg" alt="Slide 1" class="w-full h-full object-cover" />
+                <div
+                    class="absolute inset-0 bg-black bg-opacity-40 flex flex-col justify-center items-center text-center text-white px-4">
+                    <h1 class="text-4xl md:text-6xl font-bold mb-4">Find Your Perfect Choice</h1>
+                    <p class="text-lg max-w-2xl mb-6">Quality products, unbeatable deals, and everything you love — all
+                        in one place.</p>
+                    <button
+                        class="bg-gradient-to-r from-secondary to-orange-500 text-white px-6 py-3 rounded-md font-semibold">Explore
+                        Now</button>
+                </div>
+            </div>
+
+            <div class="slide absolute inset-0 transition-opacity duration-1000 opacity-0">
+                <img src="./image/bg-2.jpg" alt="Slide 2" class="w-full h-full object-cover" />
+                <div
+                    class="absolute inset-0 bg-black bg-opacity-40 flex flex-col justify-center items-center text-center text-white px-4">
+                    <h1 class="text-4xl md:text-6xl font-bold mb-4">Everything for Every Occasion</h1>
+                    <p class="text-lg max-w-2xl mb-6">Dress in style with our exclusive collection.</p>
+                    <button
+                        class="bg-gradient-to-r from-secondary to-orange-500 text-white px-6 py-3 rounded-md font-semibold">Explore
+                        Now</button>
+                </div>
+            </div>
+
+            <div class="slide absolute inset-0 transition-opacity duration-1000 opacity-0">
+                <img src="./image/bg-4.jpg" alt="Slide 3" class="w-full h-full object-cover" />
+                <div
+                    class="absolute inset-0 bg-black bg-opacity-40 flex flex-col justify-center items-center text-center text-white px-4">
+                    <h1 class="text-4xl md:text-6xl font-bold mb-4">Find Your Perfect Style</h1>
+                    <p class="text-lg max-w-2xl mb-6">Discover products that match your taste and lifestyle.</p>
+
+                    <button
+                        class="bg-gradient-to-r from-secondary to-orange-500 text-white px-6 py-3 rounded-md font-semibold">Explore
+                        Now</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Navigation Buttons -->
+        <button id="prevSlide"
+            class="absolute left-5 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-40 text-white p-3 rounded-full hover:bg-opacity-60">
+            &#10094;
+        </button>
+        <button id="nextSlide"
+            class="absolute right-5 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-40 text-white p-3 rounded-full hover:bg-opacity-60">
+            &#10095;
+        </button>
+    </section>
+
+
+    <!-- About Section -->
+    <section id="aboutShop" class="py-20 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-8 text-center">
+            <h2 class="text-3xl font-bold mb-4">About SmartShop</h2>
+            <p class="max-w-2xl mx-auto mb-10 text-gray-600">
+                At <strong>SmartShop</strong>, we make online shopping effortless and enjoyable.
+                From trending fashion to the latest gadgets, we bring quality products
+                and unbeatable deals right to your doorstep.
+            </p>
+
+            <div class="grid md:grid-cols-3 gap-8 mt-10 text-center">
+                <div class="bg-white p-8 rounded-xl shadow hover:shadow-lg transition">
+                    <i class="fa-solid fa-shield text-secondary text-3xl mb-3"></i>
+                    <h3 class="font-semibold text-xl mb-2">Secure & Trusted</h3>
+                    <p class="text-gray-600">
+                        All products are verified to ensure quality and reliability.
+                    </p>
+                </div>
+
+                <div class="bg-white p-8 rounded-xl shadow hover:shadow-lg transition">
+                    <i class="fa-solid fa-dollar-sign text-secondary text-3xl mb-3"></i>
+                    <h3 class="font-semibold text-xl mb-2">Best Prices</h3>
+                    <p class="text-gray-600">
+                        Enjoy competitive pricing and exciting deals on every purchase.
+                    </p>
+                </div>
+
+                <div class="bg-white p-8 rounded-xl shadow hover:shadow-lg transition">
+                    <i class="fa-solid fa-clock text-secondary text-3xl mb-3"></i>
+                    <h3 class="font-semibold text-xl mb-2">24/7 Support</h3>
+                    <p class="text-gray-600">
+                        Our support team is always ready to assist you with any queries.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- Products section -->
+    <section id="products" class="py-20 max-w-7xl mx-auto px-8">
+        <div class="flex justify-between items-center mb-8">
+            <h2 class="text-3xl  font-bold">Featured Section</h2>
+            <select id="sortPrice" class="border border-gray-300 rounded-md px-3 py-2 text-gray-700 focus:outline-none">
+                <option value="default">Sort by Pricing</option>
+                <option value="lowToHigh">Low to High</option>
+                <option value="highToLow">High to Low</option>
+            </select>
+        </div>
+
+        <div id="productList" class="grid md:grid-cols-3 gap-8"></div>
+
+        <!-- Show More / Show Less Button -->
+        <div class="flex justify-center mt-6">
+            <button id="showMoreBtn" class="bg-primary text-white px-6 py-2 rounded-md hover:opacity-90">
+                Show More
+            </button>
+        </div>
+    </section>
+
+
+    <!-- Reviews Section -->
+    <section id="reviews" class="py-20 bg-primary text-white text-center">
+        <div class="max-w-6xl mx-auto px-8">
+            <h2 class="text-3xl font-bold mb-10">What Our Customers Say</h2>
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="bg-white/10 p-6 rounded-xl">
+                    <p>“SmartShop always delivers the best products right to my door!”</p>
+                    <h4 class="mt-4 font-semibold">- Emily W.</h4>
+                </div>
+                <div class="bg-white/10 p-6 rounded-xl">
+                    <p>“Amazing deals and a seamless shopping experience every time.”</p>
+                    <h4 class="mt-4 font-semibold">- Michael T.</h4>
+                </div>
+                <div class="bg-white/10 p-6 rounded-xl">
+                    <p>“Fast delivery, quality products, and excellent customer support!”</p>
+                    <h4 class="mt-4 font-semibold">- Sophia L.</h4>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <section id="about" class="py-20 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-6 text-center">
+            <!-- Title -->
+            <h2 class="text-4xl font-bold text-gray-900 mb-4">About Us</h2>
+            <p class="text-gray-600 max-w-2xl mx-auto mb-12">
+                We are passionate developers from International Islamic University Chittagong, dedicated to building
+                modern, user-friendly digital experiences that make everyday life easier and more enjoyable.
+            </p>
+
+            <!-- Images & Descriptions -->
+            <div class="flex flex-col md:flex-row items-center justify-center gap-12">
+                <!-- Image 1 -->
+                <div class="flex flex-col items-center text-center max-w-sm">
+                    <img src="./image/masad.jpg" alt="Masad Rayan"
+                        class="rounded-3xl shadow-xl h-52 w-40 object-cover mb-4" />
+                    <h3 class="text-xl font-semibold mb-2 text-gray-800">Masad Rayan</h3>
+                    <p class="">
+                        ID: C233007
+                    </p>
+                    <p>Semester: 5th</p>
+                    <p>Section: 5AM</p>
+                    <p>Role: Team Leader</p>
+                    <p>Department: CSE</p>
+                </div>
+
+                <!-- Image 2 -->
+                <div class="flex flex-col items-center text-center max-w-sm">
+                    <img src="./image/Nafi.jpg" alt="Mashrur Ibne Mamun"
+                        class="rounded-3xl shadow-lg  h-52 object-cover mb-4" />
+                    <h3 class="text-xl font-semibold mb-2 text-gray-800">Mashrur Ibne Mamun</h3>
+                    <p class="">
+                        ID: C233023
+                    </p>
+                    <p>Semester: 5th</p>
+                    <p>Section: 5AM</p>
+                    <p>Role: Team Member</p>
+                    <p>Department: CSE</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- Contact Section -->
+    <section id="contact" class="pb-20 pt-10 bg-gray-50">
+        <div class="max-w-lg mx-auto text-center px-6">
+            <h2 class="text-3xl font-bold mb-6">Contact Us</h2>
+            <form id="contactForm" class="flex flex-col space-y-4">
+                <input type="text" placeholder="Your Name" class="border border-gray-300 rounded-md px-4 py-2"
+                    required />
+                <input type="email" placeholder="Your Email" class="border border-gray-300 rounded-md px-4 py-2"
+                    required />
+                <textarea placeholder="Your Message"
+                    class="border border-gray-300 rounded-md px-4 py-2 h-32 resize-none" required></textarea>
+                <button type="submit" class="bg-secondary text-white px-6 py-3 rounded-md font-semibold">
+                    Send Message
+                </button>
+            </form>
+        </div>
+    </section>
+
+
+    <!-- FAQ section -->
+    <section id="faq" class="py-20 bg-gray-50">
+        <div class="max-w-5xl mx-auto px-6">
+            <!-- Title -->
+            <h2 class="text-4xl font-bold text-center text-gray-900 mb-4">Frequently Asked Questions</h2>
+            <p class="text-center text-gray-600 mb-12">
+                Got questions? We’ve got answers! Here are some of the most common queries from our users.
+            </p>
+
+            <!-- DaisyUI Accordion -->
+            <div class="space-y-4">
+                <div class="collapse collapse-plus bg-white shadow rounded-lg">
+                    <input type="radio" name="faq-accordion" checked="checked" />
+                    <div class="collapse-title text-lg font-medium text-gray-800">
+                        How do I add products to my cart?
+                    </div>
+                    <div class="collapse-content text-gray-600">
+                        <p>
+                            Simply browse through our products, select your preferred item, choose quantity or size if
+                            applicable, and click the “Add to Cart” button.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="collapse collapse-plus bg-white shadow rounded-lg">
+                    <input type="radio" name="faq-accordion" />
+                    <div class="collapse-title text-lg font-medium text-gray-800">
+                        Can I edit my cart before checkout?
+                    </div>
+                    <div class="collapse-content text-gray-600">
+                        <p>
+                            Yes! You can adjust quantities or remove items anytime before confirming your order on the
+                            Cart page.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="collapse collapse-plus bg-white shadow rounded-lg">
+                    <input type="radio" name="faq-accordion" />
+                    <div class="collapse-title text-lg font-medium text-gray-800">
+                        What technologies power SmartShop?
+                    </div>
+                    <div class="collapse-content text-gray-600">
+                        <p>
+                            SmartShop is built using a combination of modern web technologies, including HTML, CSS,
+                            JavaScript, and Tailwind CSS to ensure a seamless shopping experience.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="collapse collapse-plus bg-white shadow rounded-lg">
+                    <input type="radio" name="faq-accordion" />
+                    <div class="collapse-title text-lg font-medium text-gray-800">
+                        What inspired the creation of SmartShop?
+                    </div>
+                    <div class="collapse-content text-gray-600">
+                        <p>
+                            The idea came from wanting to build a simple yet powerful e-commerce platform that combines
+                            speed, trust, and a delightful user interface.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+
+    <!-- Footer -->
+    <footer id="faq" class="bg-gray-100 pt-16 pb-8 text-gray-700">
+        <div class="max-w-7xl mx-auto grid md:grid-cols-5 gap-8 px-8 text-sm">
+            <!-- Brand -->
+            <div>
+                <h3 class="text-2xl font-bold text-primary mb-4">SmartShop</h3>
+                <p>Chittagong, Bangladesh</p>
+                <p class="mt-2">contact@company.com</p>
+                <p class="mt-1">+001 2233 456</p>
+                <div class="flex space-x-4 mt-4 text-lg">
+                    <i class="fa-brands fa-facebook hover:text-secondary"></i>
+                    <i class="fa-brands fa-twitter hover:text-secondary"></i>
+                    <i class="fa-brands fa-instagram hover:text-secondary"></i>
+                    <i class="fa-brands fa-linkedin hover:text-secondary"></i>
+                </div>
+            </div>
+
+            <!-- Categories -->
+            <div>
+                <h4 class="font-semibold mb-3">Categories</h4>
+                <ul class="space-y-2">
+                    <li>Men</li>
+                    <li>Women</li>
+                    <li>Accessories</li>
+                    <li>Shoes</li>
+                    <li>Dress</li>
+                </ul>
+            </div>
+
+            <!-- Information -->
+            <div>
+                <h4 class="font-semibold mb-3">Information</h4>
+                <ul class="space-y-2">
+                    <li>About Us</li>
+                    <li>Contact Us</li>
+                    <li>Terms & Conditions</li>
+                    <li>Shipping & Delivery</li>
+                    <li>Privacy Policy</li>
+                </ul>
+            </div>
+
+            <!-- Useful Links -->
+            <div>
+                <h4 class="font-semibold mb-3">Useful Links</h4>
+                <ul class="space-y-2">
+                    <li>Store Location</li>
+                    <li>My Account</li>
+                    <li>FAQs</li>
+                </ul>
+            </div>
+
+            <!-- Newsletter -->
+            <div>
+                <h4 class="font-semibold mb-3">Newsletter Signup</h4>
+                <p class="mb-3 text-gray-600">
+                    Subscribe to our newsletter and get 10% off your first purchase.
+                </p>
+                <div class="flex">
+                    <input type="email" placeholder="Your email address"
+                        class="border border-gray-300 px-3 py-2 w-full rounded-l-md" />
+                    <button class="bg-gradient-to-r from-secondary to-orange-500 text-white px-4 py-2 rounded-r-md">
+                        Subscribe
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="border-t mt-10 pt-6 text-center text-gray-500 text-sm">
+            © 2025 Rentify. All rights reserved. Powered by
+            <span class="text-secondary font-semibold">SmartShop</span>.
+        </div>
+    </footer>
+
+
+    <!-- Cart Side Drawer -->
+    <div id="cartDrawer"
+        class="fixed top-0 right-0 h-full w-80 bg-white shadow-lg transform translate-x-full transition-transform duration-300 z-50 flex flex-col">
+        <!-- Header -->
+        <div class="flex justify-between items-center p-4 border-b">
+            <h3 class="font-bold text-lg text-[#1A1A40]">Shopping Cart</h3>
+
+            <button id="closeCartBtn" class="text-gray-500 hover:text-[#FF6F3C] text-xl">
+                &times;
+            </button>
+        </div>
+        <div class="p-4">
+            <h3 class="font-semibold text-lg mb-2">Your Balance: <span id="userBalance"></span> BDT</h3>
+            <button id="addMoneyBtn" class="px-3 py-1 bg-secondary text-white rounded">Add 1000
+                BDT
+            </button>
+            <button id="resetBalanceBtn" class="px-3 py-1 bg-secondary text-white rounded">
+                Reset Balance
+            </button>
+            <p id="balanceWarning" class="text-red-500 font-semibold mt-2 hidden">⚠️ Not enough balance!</p>
+        </div>
+
+        <!-- Scrollable product list -->
+        <div id="cartItems" class="flex-1 overflow-y-auto p-4 space-y-3"></div>
+
+        <!-- Footer section (fixed at bottom) -->
+        <div class="border-t p-4 space-y-2 bg-white">
+            <p>Subtotal: <span id="subtotal">0</span>BDT</p>
+            <p>Delivery: <span id="delivery">0</span>BDT</p>
+            <p>Shipping: <span id="shipping">0</span>BDT</p>
+            <p>Discount: <span id="discount">0</span>BDT</p>
+            <p class="font-bold text-[#1A1A40]">
+                Total: <span id="total">0</span>BDT
+            </p>
+
+            <div class="flex space-x-2 mt-2">
+                <input id="couponInput" type="text" placeholder="Coupon Code"
+                    class="border px-2 py-1 rounded-md flex-1" />
+                <button id="applyCouponBtn" class="bg-[#FF6F3C] text-white px-3 py-1 rounded-md">
+                    Apply
+                </button>
+            </div>
+            <button id="checkoutBtn"
+                class="w-full bg-secondary text-white py-2 rounded-md font-semibold mt-4 hover:opacity-90">
+                Checkout
+            </button>
+        </div>
+    </div>
+
+    <!-- Overlay -->
+    <div id="cartOverlay" class="fixed inset-0 bg-black/50 hidden z-40"></div>
+
+
+    <script src="script.js"></script>
+</body>
+
+</html>
