@@ -87,12 +87,12 @@ function displayProducts(list) {
         <div class="bg-white p-6 rounded-xl shadow hover:shadow-lg transition text-center">
             <img src="${product.image}" alt="${product.title}" class="h-40 w-full object-contain mb-4"/>
             <h3 class="font-semibold text-lg mb-2">${product.title}</h3>
-            <p class="text-secondary font-bold mb-2">${product.price} BDT</p>
+            <p class="text-secondary font-bold mb-2">${(product.price*120).toFixed(2)} BDT</p>
             <button 
                 class="add-to-cart bg-gradient-to-r from-secondary to-orange-500 text-white px-4 py-2 rounded-md font-semibold hover:opacity-90"
                 data-id="${product.id}"
                 data-title="${product.title}"
-                data-price="${product.price}"
+                data-price="${(product.price*120).toFixed(2)}"
             >
                 Add to Cart
             </button>
