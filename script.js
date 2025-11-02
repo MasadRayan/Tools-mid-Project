@@ -1,7 +1,6 @@
-// -------------------- Navbar Scroll & Active Link --------------------
+// Navbar Scroll & Active Link
 window.addEventListener("scroll", () => {
     const navbar = document.querySelector(".navbar");
-    // Add blur effect or background if needed
 });
 
 // Navbar active menu highlight
@@ -28,7 +27,7 @@ function updateActiveMenu() {
 window.addEventListener("scroll", updateActiveMenu);
 updateActiveMenu();
 
-// -------------------- Hero Slider --------------------
+// Hero Slider
 const slides = document.querySelectorAll("#slider .slide");
 let currentSlide = 0;
 let slideInterval = setInterval(nextSlide, 3000);
@@ -61,7 +60,7 @@ function resetInterval() {
 }
 showSlide(currentSlide);
 
-// -------------------- Product Fetch & Display --------------------
+//Product Fetch & Display 
 const productList = document.getElementById("productList");
 const sortSelect = document.getElementById("sortPrice");
 const showMoreBtn = document.getElementById("showMoreBtn");
@@ -122,7 +121,7 @@ showMoreBtn.addEventListener("click", () => {
 });
 fetchProducts();
 
-// -------------------- Cart Drawer --------------------
+//Cart Drawer
 const cartBtn = document.getElementById("cartBtn");
 const cartDrawer = document.getElementById("cartDrawer");
 const cartOverlay = document.getElementById("cartOverlay");
@@ -135,7 +134,7 @@ cartBtn.addEventListener("click", openCart);
 closeCartBtn.addEventListener("click", closeCart);
 cartOverlay.addEventListener("click", closeCart);
 
-// -------------------- User Balance System --------------------
+//User Balance System
 let balance = localStorage.getItem("userBalance") ? parseFloat(localStorage.getItem("userBalance")) : 1000;
 const balanceEl = document.getElementById("userBalance");
 const addMoneyBtn = document.getElementById("addMoneyBtn");
@@ -163,7 +162,7 @@ resetBalanceBtn.addEventListener("click", () => {
     balanceWarning.classList.add("hidden");
 });
 
-// -------------------- Cart Functionality --------------------
+// Cart Functionality
 const cartItemsContainer = document.getElementById("cartItems");
 const subtotalEl = document.getElementById("subtotal");
 const deliveryEl = document.getElementById("delivery");
@@ -185,7 +184,7 @@ document.addEventListener("click", (e) => {
 
         const potentialSubtotal = cart.reduce((acc, item) => acc + item.price * item.qty, 0) + price;
         if (potentialSubtotal > balance) {
-            alert("⚠️ Low balance! You cannot add this product.");
+            alert("Low balance! You cannot add this product.");
             return;
         }
 
@@ -239,7 +238,7 @@ function updateCart() {
     balanceEl.textContent = (balance - subtotal).toFixed(2);
 }
 
-// -------------------- Checkout --------------------
+//Checkout
 const checkoutBtn = document.getElementById("checkoutBtn");
 checkoutBtn.addEventListener("click", () => {
     if (cart.length > 0) {
@@ -251,7 +250,7 @@ checkoutBtn.addEventListener("click", () => {
     }
 });
 
-// -------------------- Contact Form --------------------
+//Contact Form
 document.getElementById("contactForm").addEventListener("submit", (e) => {
     e.preventDefault();
     alert("Message sent successfully! We’ll get back to you soon.");
